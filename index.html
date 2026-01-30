@@ -1,138 +1,131 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>デジタル御城印 ダウンロード｜江美城</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
-      background: linear-gradient(180deg, #f7f3eb, #efe7d8);
-      color: #2e2a24;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #3b2f1e;
-      color: #fff;
-      padding: 1.5rem 1rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      letter-spacing: 0.15em;
-    }
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem 1rem 3rem;
-    }
-    .intro {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      line-height: 1.8;
-    }
-    .intro p {
-      margin: 0.5rem 0;
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-    .card {
-      background: #ffffff;
-      border: 1px solid #d8cdb5;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 0.75rem;
-    }
-    .card h2 {
-      font-size: 1.1rem;
-      margin: 0.3rem 0;
-      text-align: center;
-    }
-    .card p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin: 0.3rem 0 0.8rem;
-    }
-    .download {
-      text-align: center;
-      margin-top: auto;
-    }
-    .download a {
-      display: inline-block;
-      background: #7a5a2b;
-      color: #fff;
-      text-decoration: none;
-      padding: 0.6rem 1.4rem;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      transition: background 0.2s ease;
-    }
-    .download a:hover {
-      background: #5f451f;
-    }
-    .note {
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      background: #fbf8f2;
-      border-left: 4px solid #7a5a2b;
-      padding: 1rem;
-      line-height: 1.7;
-    }
-    footer {
-      background: #3b2f1e;
-      color: #ddd;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.8rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>江美城 デジタル御城印（通常版）</title>
+
+<style>
+body {
+  font-family: "Noto Serif JP", "游明朝", serif;
+  background: #f7f6f2;
+  color: #222;
+  margin: 0;
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.lead {
+  font-size: 15px;
+  margin-bottom: 30px;
+  line-height: 1.8;
+}
+
+/* 御城印表示 */
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.image-wrapper img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
+/* 日付（左下・縦書き・墨色） */
+.vertical-date {
+  position: absolute;
+  left: 25px;
+  bottom: 25px;
+
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: #2b2b2b;
+}
+
+/* DLボタン */
+.download {
+  margin-top: 25px;
+}
+
+.download a {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #333;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.download a:hover {
+  opacity: 0.85;
+}
+
+.note {
+  font-size: 13px;
+  margin-top: 20px;
+  color: #555;
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>江美城　デジタル御城印</h1>
-  </header>
+<div class="container">
 
-  <main>
-    <section class="intro">
-      <p>江美城跡を訪れた記念としてお楽しみいただける</p>
-      <p><strong>デジタル御城印</strong>を無料で配布しています。</p>
-      <p>スマートフォンの壁紙や、個人利用の範囲でご活用ください。</p>
-    </section>
+  <h1>江美城 デジタル御城印</h1>
 
-    <section class="gallery">
-      <div class="card">
-        <img src="ebicastle.png" alt="江美城 デジタル御城印">
-        <h2>デジタル御城印</h2>
-        <p>江美城の名称と江府町歴史民俗資料館を背景としたデジタル御城印です。</p>
-        <div class="download">
-          <a href="ebicastle.png" download>ダウンロード</a>
-        </div>
-      </div>
-    </section>
+  <p class="lead">
+    江美城の歴史と姿を伝えるデジタル御城印です。<br>
+    本ページで表示される日付は、閲覧した当日の日付が自動で反映されます。
+  </p>
 
-    <section class="note">
-      <strong>ご利用にあたって</strong><br />
-      ・本デジタル御城印は個人利用に限りご使用いただけます。<br />
-      ・転載は禁止での再配布、販売、改変した上での公開はご遠慮ください。<br />
-      ・画像の著作権は江府町教育委員会に帰属します。
-    </section>
-  </main>
+  <div class="image-wrapper">
+    <img src="ebicastle.png" alt="江美城 デジタル御城印 通常版">
+    <div id="date-text" class="vertical-date"></div>
+  </div>
 
-  <footer>
-    © 江美城跡
-  </footer>
+  <div class="download">
+    <a href="ebicastle.png" download>画像をダウンロード</a>
+  </div>
+
+  <p class="note">
+    ※ 個人利用の範囲でお楽しみください。<br>
+    ※ 無断転載・再配布はご遠慮ください。
+  </p>
+
+</div>
+
+<script>
+const today = new Date();
+
+const wareki = new Intl.DateTimeFormat(
+  'ja-JP-u-ca-japanese',
+  {
+    era: 'long',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric'
+  }
+).format(today);
+
+document.getElementById('date-text').textContent =
+  `発行日\n${wareki}`;
+</script>
+
 </body>
 </html>
