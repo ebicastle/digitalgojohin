@@ -155,14 +155,14 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
       y -= 24;
     }
 
-   // ファイル名
+// ファイル名
 const d = new Date();
 const ymd =
   d.getFullYear() +
   String(d.getMonth() + 1).padStart(2, "0") +
   String(d.getDate()).padStart(2, "0");
 
-// ★ DL処理（必ずこれ）
+// DL処理
 canvas.toBlob(blob => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -173,6 +173,9 @@ canvas.toBlob(blob => {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }, "image/png");
+
+}); // ← ★ イベントを閉じる（1個だけ）
+
 
 </script>
 
