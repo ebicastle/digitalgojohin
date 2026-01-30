@@ -2,84 +2,67 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>江美城 デジタル御城印</title>
+<title>江美城 デジタル御城印 配布ページ</title>
 
 <style>
 body {
   font-family: "Noto Serif JP", "游明朝", serif;
   background: #f7f6f2;
   color: #222;
-  margin: 0;
   padding: 40px 20px;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 820px;
   margin: 0 auto;
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 26px;
   margin-bottom: 10px;
 }
 
 .lead {
   font-size: 15px;
-  margin-bottom: 30px;
   line-height: 1.8;
+  margin-bottom: 30px;
 }
 
-/* 御城印表示 */
 .image-wrapper {
-  position: relative;
-  display: inline-block;
-  background: #fff;
-  padding: 10px;
-  border: 1px solid #ccc;
+  text-align: center;
 }
 
 .image-wrapper img {
-  width: 100%;
   max-width: 600px;
+  width: 100%;
   height: auto;
+  border: 1px solid #ccc;
+  background: #fff;
 }
 
-/* 日付（左下・縦書き・墨色） */
-.vertical-date {
-  position: absolute;
-  left: 25px;
-  bottom: 25px;
-
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-
-  font-size: 18px;
-  letter-spacing: 0.1em;
-  color: #2b2b2b;
-}
-
-/* DLボタン */
 .download {
-  margin-top: 25px;
+  text-align: center;
+  margin-top: 30px;
 }
 
-.download a {
-  display: inline-block;
-  padding: 12px 24px;
+.download button {
+  padding: 12px 28px;
+  font-size: 14px;
   background: #333;
   color: #fff;
-  text-decoration: none;
-  font-size: 14px;
+  border: none;
+  cursor: pointer;
 }
 
-.download a:hover {
+.download button:hover {
   opacity: 0.85;
 }
 
 .note {
   font-size: 13px;
-  margin-top: 20px;
   color: #555;
+  margin-top: 25px;
+  line-height: 1.7;
 }
 </style>
 </head>
@@ -87,44 +70,81 @@ h1 {
 <body>
 <div class="container">
 
-  <h1>江美城 デジタル御城印</h1>
+<h1>江美城 デジタル御城印（通常版）</h1>
 
-  <p class="lead">
-    江美城の歴史と姿を伝えるデジタル御城印です。<br>
-    本ページで表示される日付は、閲覧した当日の日付が自動で反映されます。
-  </p>
+<p class="lead">
+江美城の歴史を伝えるデジタル御城印です。<br>
+ダウンロードされる画像には、取得当日の日付が自動で記録されます。
+</p>
 
-  <div class="image-wrapper">
-    <img src="ebicastle.png" alt="江美城 デジタル御城印 通常版">
-    <div id="date-text" class="vertical-date"></div>
-  </div>
+<div class="image-wrapper">
+  <!-- 表示用：日付なし -->
+  <img id="gojohin" src="ebicastle.png" alt="江美城デジタル御城印">
+</div>
 
-  <div class="download">
-    <a href="ebicastle.png" download>画像をダウンロード</a>
-  </div>
+<div class="download">
+  <button id="downloadBtn">デジタル御城印をダウンロード</button>
+</div>
 
-  <p class="note">
-    ※ 個人利用の範囲でお楽しみください。<br>
-    ※ 無断転載・再配布はご遠慮ください。
-  </p>
+<p class="note">
+※ 本御城印は個人利用の範囲でお楽しみください。<br>
+※ 無断転載・再配布・商用利用はご遠慮ください。
+</p>
 
 </div>
 
 <script>
-const today = new Date();
+document.getElementById("downloadBtn").addEventListener("click", () => {
 
-const wareki = new Intl.DateTimeFormat(
-  'ja-JP-u-ca-japanese',
-  {
-    era: 'long',
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric'
+  const img = document.getElementById("oshiroin");
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+
+  // 原本画像を描画
+  ctx.drawImage(img, 0, 0);
+
+  // 和暦日付
+  const wareki = new Intl.DateTimeFormat(
+    'ja-JP-u-ca-japanese',
+    {
+      era: 'long',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric'
+    }
+  ).format(new Date());
+
+  // 縦書き・墨色設定
+  ctx.fillStyle = "#2b2b2b";
+  ctx.font = "48px 'Noto Serif JP', serif";
+  ctx.textAlign = "left";
+  ctx.textBaseline = "bottom";
+
+  const startX = 80;                 // 左余白
+  let startY = canvas.height - 80;   // 下余白
+
+  const text = `${wareki}`;
+
+  for (const char of text) {
+    ctx.fillText(char, startX, startY);
+    startY -= 52;
   }
-).format(today);
 
-document.getElementById('date-text').textContent =
-  `発行日\n${wareki}`;
+  // DL
+  const today = new Date();
+  const y = today.getFullYear();
+  const m = String(today.getMonth() + 1).padStart(2, '0');
+  const d = String(today.getDate()).padStart(2, '0');
+
+  const link = document.createElement("a");
+  link.href = canvas.toDataURL("image/png");
+  link.download = `江美城_デジタル御城印_${y}${m}${d}.png`;
+  link.click();
+});
 </script>
 
 </body>
