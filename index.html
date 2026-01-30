@@ -94,70 +94,82 @@ h1 {
 </div>
 
 <script>
-document.getElementById("downloadBtn").addEventListener("click", () => {
+document.getElementById("downloadBtn").addEventListener("click", async () => {
 
-  const img = document.getElementById("oshiroin");
+  // ① 画像を fetch で取得
+  const response = await fetch("oshiroin-emi.png");
+  const blob = await response.blob();
 
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  // ② Blob → Image
+  const img = new Image();
+  img.src = URL.createObjectURL(blob);
 
-  canvas.width = img.naturalWidth;
-  canvas.height = img.naturalHeight;
+  img.onload = () => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
 
-  // 原本描画
-  ctx.drawImage(img, 0, 0);
+    canvas.width = img.width;
+    canvas.height = img.height;
 
-  // 描画品質（明朝対策）
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = "high";
+    // 原本描画
+    ctx.drawImage(img, 0, 0);
 
-  // 和暦（漢数字）
-  const wareki = new Intl.DateTimeFormat(
-    'ja-JP-u-ca-japanese',
-    { era: 'long', year: 'numeric', month: 'numeric', day: 'numeric' }
-  ).format(new Date()); // 例：令和八年一月三十日
+    // 明朝対策
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
 
-  // 縦書き用分解
-  const lines = [
-    wareki.match(/^(.*年)/)[1],
-    "",
-    wareki.match(/年(.*月)/)[1],
-    "",
-    wareki.match(/月(.*日)/)[1]
-  ];
+    // 和暦生成
+    const wareki = new Intl.DateTimeFormat(
+      "ja-JP-u-ca-japanese",
+      { era: "long", year: "numeric", month: "numeric", day: "numeric" }
+    ).format(new Date());
 
-  // 明朝・墨色
-  ctx.fillStyle = "#2b2b2b";
-  ctx.font = "48px 'Yu Mincho', '游明朝', 'Hiragino Mincho ProN', 'Noto Serif JP', serif";
-  ctx.textAlign = "left";
-  ctx.textBaseline = "bottom";
+    // 年・月・日 分解
+    const lines = [
+      wareki.match(/^(.*年)/)[1],
+      "",
+      wareki.match(/年(.*月)/)[1],
+      "",
+      wareki.match(/月(.*日)/)[1]
+    ];
 
-  const x = 80;                     // 左余白
-  let y = canvas.height - 80;       // 下余白
+    // 明朝・墨色
+    ctx.fillStyle = "#2b2b2b";
+    ctx.font =
+      "48px 'Yu Mincho','游明朝','Hiragino Mincho ProN','Noto Serif JP',serif";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "bottom";
 
-  for (const line of lines) {
-    if (!line) {
-      y -= 32; // 段落の「間」
-      continue;
+    const x = 80;
+    let y = canvas.height - 80;
+
+    for (const line of lines) {
+      if (!line) {
+        y -= 32;
+        continue;
+      }
+      for (const char of line) {
+        ctx.fillText(char, x, y);
+        y -= 56;
+      }
+      y -= 24;
     }
-    for (const char of line) {
-      ctx.fillText(char, x, y);
-      y -= 56; // 明朝向け文字間
-    }
-    y -= 24;   // 行間
-  }
 
-  // ファイル名（日付付き）
-  const d = new Date();
-  const ymd =
-    d.getFullYear() +
-    String(d.getMonth() + 1).padStart(2, "0") +
-    String(d.getDate()).padStart(2, "0");
+    // ファイル名
+    const d = new Date();
+    const ymd =
+      d.getFullYear() +
+      String(d.getMonth() + 1).padStart(2, "0") +
+      String(d.getDate()).padStart(2, "0");
 
-  const link = document.createElement("a");
-  link.href = canvas.toDataURL("image/png");
-  link.download = `江美城_デジタル御城印_${ymd}.png`;
-  link.click();
+    // DL
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = `江美城_デジタル御城印_${ymd}.png`;
+    link.click();
+
+    URL.revokeObjectURL(img.src);
+  };
 });
 </script>
 
