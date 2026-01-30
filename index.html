@@ -79,7 +79,7 @@ h1 {
 
 <div class="image-wrapper">
   <!-- 表示用：日付なし原本 -->
-  <img id="oshiroin" src="ebicastle.png" crossorigin="anonymous" alt="江美城 デジタル御城印">
+  <img id="gojohin" src="ebicastle.png" crossorigin="anonymous" alt="江美城 デジタル御城印">
 </div>
 
 <div class="download">
@@ -97,7 +97,7 @@ h1 {
 document.getElementById("downloadBtn").addEventListener("click", async () => {
 
   // ① 画像を fetch で取得
-  const response = await fetch("oshiroin-emi.png");
+  const response = await fetch("ebicastle.png");
   const blob = await response.blob();
 
   // ② Blob → Image
