@@ -155,18 +155,25 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
       y -= 24;
     }
 
-    // ファイル名
-    const d = new Date();
-    const ymd =
-      d.getFullYear() +
-      String(d.getMonth() + 1).padStart(2, "0") +
-      String(d.getDate()).padStart(2, "0");
+   // ファイル名
+const d = new Date();
+const ymd =
+  d.getFullYear() +
+  String(d.getMonth() + 1).padStart(2, "0") +
+  String(d.getDate()).padStart(2, "0");
 
-    // DL
-    const link = document.createElement("a");
-    link.href = canvas.toDataURL("image/png");
-    link.download = `江美城_デジタル御城印_${ymd}.png`;
-    link.click();
+// ★ DL処理（必ずこれ）
+canvas.toBlob(blob => {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `江美城_デジタル御城印_${ymd}.png`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}, "image/png");
+
 
     URL.revokeObjectURL(img.src);
   };
