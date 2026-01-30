@@ -2,9 +2,15 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>江美城デジタル御城印｜ダウンロード</title>
+  <title>江美城デジタル御城印｜公式ダウンロード</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
+    @font-face {
+      font-family: "KouzanBrush";
+      src: url("fonts/KouzanBrushFont.ttf") format("truetype");
+    }
+
     body {
       font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
       margin: 0;
@@ -21,7 +27,7 @@
     header h1 {
       margin: 0;
       font-size: 2rem;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
     }
     header p {
       margin-top: 0.5rem;
@@ -29,44 +35,44 @@
       opacity: 0.9;
     }
     main {
-      max-width: 960px;
+      max-width: 1000px;
       margin: 2rem auto;
       padding: 0 1rem;
     }
     section {
       background: #fff;
-      border-radius: 10px;
-      padding: 1.5rem;
+      border-radius: 12px;
+      padding: 1.8rem;
       margin-bottom: 2rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     h2 {
-      border-left: 6px solid #b33a3a;
+      border-left: 6px solid #7a1f1f;
       padding-left: 0.6rem;
       margin-top: 0;
       font-size: 1.4rem;
     }
     .goshuin-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
     }
     .goshuin-card {
       border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 1rem;
+      border-radius: 10px;
+      padding: 1.2rem;
       text-align: center;
       background: #fafafa;
     }
-    .goshuin-card img {
-      max-width: 100%;
+    canvas {
+      width: 100%;
       height: auto;
-      border-radius: 4px;
-      margin-bottom: 0.8rem;
+      border-radius: 6px;
+      background: #eee;
     }
     .goshuin-card h3 {
-      margin: 0.5rem 0;
+      margin: 0.8rem 0 0.4rem;
       font-size: 1.1rem;
     }
     .goshuin-card p {
@@ -76,11 +82,11 @@
     .download-btn {
       display: inline-block;
       margin-top: 0.8rem;
-      padding: 0.6rem 1.2rem;
+      padding: 0.6rem 1.4rem;
       background: #7a1f1f;
       color: #fff;
       text-decoration: none;
-      border-radius: 20px;
+      border-radius: 24px;
       font-size: 0.9rem;
     }
     .download-btn:hover {
@@ -89,129 +95,133 @@
     .note {
       font-size: 0.85rem;
       color: #666;
+      margin-top: 1rem;
     }
     footer {
       text-align: center;
-      padding: 1.5rem 1rem;
+      padding: 1.5rem 1rem 2rem;
       font-size: 0.8rem;
       color: #666;
     }
   </style>
-  <script>
-    function toKanji(num) {
-      const kanjiNums = ['','一','二','三','四','五','六','七','八','九'];
-      if (num === 0) return '〇';
-      if (num <= 10) return num === 10 ? '十' : kanjiNums[num];
-      if (num < 20) return '十' + kanjiNums[num - 10];
-      if (num < 100) {
-        const tens = Math.floor(num / 10);
-        const ones = num % 10;
-        return kanjiNums[tens] + '十' + (ones ? kanjiNums[ones] : '');
-      }
-      return num;
-    }
-
-    function toWareki(date) {
-      const eras = [
-        { name: '令和', start: new Date(2019, 4, 1) },
-        { name: '平成', start: new Date(1989, 0, 8) },
-        { name: '昭和', start: new Date(1926, 11, 25) },
-        { name: '大正', start: new Date(1912, 6, 30) },
-        { name: '明治', start: new Date(1868, 0, 25) }
-      ];
-      for (const era of eras) {
-        if (date >= era.start) {
-          const yearNum = date.getFullYear() - era.start.getFullYear() + 1;
-          const year = yearNum === 1 ? '元' : toKanji(yearNum);
-          const month = toKanji(date.getMonth() + 1);
-          const day = toKanji(date.getDate());
-          return `${era.name}${year}年${month}月${day}日`;
-        }
-      }
-      return '';
-    }
-
-    function applyDateToImages() {
-      const today = new Date();
-      const wareki = toWareki(today);
-      document.querySelectorAll('.goshuin-card').forEach(card => {
-        let label = document.createElement('div');
-        label.textContent = `日付：${wareki}`;
-        label.style.fontSize = '0.8rem';
-        label.style.marginTop = '0.3rem';
-        label.style.color = '#444';
-        card.appendChild(label);
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', applyDateToImages);
-  </script>
 </head>
 <body>
 
 <header>
   <h1>江美城 デジタル御城印</h1>
-  <p>― 山陰の歴史を、あなたの端末に ―</p>
+  <p>― 伯耆国・中世山城の記憶を、いまに ―</p>
 </header>
 
 <main>
 
-  <section>
-    <h2>デジタル御城印について</h2>
-    <p>
-      江美城（えみじょう）は、伯耆国に築かれた中世山城で、中国地方の地方城郭としては
-      きわめて特徴的な構造を持つ城として知られています。
-    </p>
-    <p>
-      本ページでは、江美城をより身近に楽しんでいただくため、
-      <strong>スマートフォンやPCで保存・鑑賞できる「デジタル御城印」</strong>を配布しています。
-    </p>
-  </section>
+<section>
+  <h2>デジタル御城印について</h2>
+  <p>
+    江美城（えみじょう）は伯耆国に築かれた中世山城で、中国地方の地方城郭としては
+    特異な構造を持つ城として知られています。
+  </p>
+  <p>
+    本ページでは、江美城を訪れた記念として保存できる
+    <strong>日付入りデジタル御城印</strong>を配布しています。
+  </p>
+</section>
 
-  <section>
-    <h2>ダウンロード</h2>
+<section>
+  <h2>ダウンロード</h2>
 
-    <div class="goshuin-list">
+  <div class="goshuin-list">
 
-      <div class="goshuin-card">
-        <canvas class="goshuin-canvas" width="800" height="1100" data-src="$&"></canvas>
-        <h3>$1</h3>
-        <p>$2</p>
-        <a class="download-btn" href="#" onclick="downloadCanvas(this)">
-          PNGをダウンロード
-        </a>
-      </div>
-
-      <div class="goshuin-card">
-        <canvas class="goshuin-canvas" width="800" height="1100" data-src="$&"></canvas>
-        <h3>$1</h3>
-        <p>$2</p>
-        <a class="download-btn" href="#" onclick="downloadCanvas(this)">
-          PNGをダウンロード
-        </a>
-      </div>
-
+    <div class="goshuin-card">
+      <canvas class="goshuin-canvas" width="800" height="1100" data-image="ebicastle.jpg"></canvas>
+      <h3>通常版</h3>
+      <p>江美城の名称と城紋を配した基本デザイン。</p>
+      <a class="download-btn" href="#" onclick="downloadCanvas(this)">日付入りPNGをダウンロード</a>
     </div>
 
-    <p class="note">
-      ※ 個人利用の範囲でお楽しみください。無断転載は禁止・再配布は禁止しています。
-    </p>
-  </section>
+    <div class="goshuin-card">
+      <canvas class="goshuin-canvas" width="800" height="1100" data-image="ebicastle.jpg"></canvas>
+      <h3>特別版</h3>
+      <p>発掘調査成果をモチーフとした限定意匠。</p>
+      <a class="download-btn" href="#" onclick="downloadCanvas(this)">日付入りPNGをダウンロード</a>
+    </div>
 
-  <section>
-    <h2>利用上の注意</h2>
-    <ul>
-      <li>デジタル御城印は非公式の参拝証明であり、実際の登城証明を代替するものではありません。</li>
-      <li>SNS等での紹介の際は、出典として「江美城デジタル御城印」と明記してください。</li>
-      <li>内容・デザインは予告なく変更される場合があります。</li>
-    </ul>
-  </section>
+  </div>
+
+  <p class="note">※ 個人利用の範囲でお楽しみください。画像の再配布・転載は禁止です。</p>
+</section>
+
+<section>
+  <h2>利用上の注意</h2>
+  <ul>
+    <li>本御城印は非公式のデジタルコンテンツです。</li>
+    <li>実際の登城・来訪を証明するものではありません。</li>
+    <li>内容・デザインは予告なく変更される場合があります。</li>
+  </ul>
+</section>
 
 </main>
 
 <footer>
   <p>© 江美城デジタル御城印プロジェクト</p>
 </footer>
+
+<script>
+function toKanji(num) {
+  const k = ['','一','二','三','四','五','六','七','八','九'];
+  if (num === 10) return '十';
+  if (num < 10) return k[num];
+  if (num < 20) return '十' + k[num-10];
+  if (num < 100) return k[Math.floor(num/10)] + '十' + (num%10 ? k[num%10] : '');
+  return num;
+}
+
+function toWareki(date) {
+  const eras = [
+    { name: '令和', start: new Date(2019,4,1) },
+    { name: '平成', start: new Date(1989,0,8) },
+    { name: '昭和', start: new Date(1926,11,25) }
+  ];
+  for (const e of eras) {
+    if (date >= e.start) {
+      const y = date.getFullYear() - e.start.getFullYear() + 1;
+      return `${e.name}${y===1?'元':toKanji(y)}年${toKanji(date.getMonth()+1)}月${toKanji(date.getDate())}日`;
+    }
+  }
+  return '';
+}
+
+function drawGoshuin(canvas) {
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.src = canvas.dataset.image;
+
+  img.onload = () => {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const wareki = toWareki(new Date());
+
+    ctx.save();
+    ctx.translate(canvas.width - 50, canvas.height - 60);
+    ctx.rotate(-Math.PI / 2);
+    ctx.font = '34px KouzanBrush, serif';
+    ctx.fillStyle = '#111';
+    ctx.textAlign = 'left';
+    ctx.fillText(`登城之日　${wareki}`, 0, 0);
+    ctx.restore();
+  };
+}
+
+function downloadCanvas(btn) {
+  const canvas = btn.closest('.goshuin-card').querySelector('canvas');
+  const a = document.createElement('a');
+  a.download = 'ebicastle.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.goshuin-canvas').forEach(drawGoshuin);
+});
+</script>
 
 </body>
 </html>
